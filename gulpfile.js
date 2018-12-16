@@ -8,12 +8,14 @@ const gulp = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     cssmin = require('gulp-clean-css'),
-    rigger = require('gulp-rigger'),
     rimraf = require('rimraf'),
     imagemin = require('gulp-imagemin'),
     browserSync = require("browser-sync"),
     reload = browserSync.reload,
     favicons = require("favicons").stream,
+    cssunit = require('gulp-css-unit'),
+    imageResize = require('gulp-image-resize'),
+    fileinclude = require('gulp-file-include'),
     gutil = require("gulp-util");
 
 const serverConfig = {
@@ -50,7 +52,8 @@ const path = {
 
 gulp.task('html:build', function () {
     gulp.src(path.src.html)
-        .pipe(rigger())
+        .pipe(fileinclude())
+        .on('error', console.log('err in html'))
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
@@ -68,6 +71,11 @@ gulp.task('style:build', function () {
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(prefixer())
+        .pipe(cssunit({
+          type     :    'px-to-rem',
+          rootSize  :    10
+          })
+        )
         .pipe(cssmin({compatibility: 'ie8'}))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest(path.build.css))
@@ -80,6 +88,11 @@ gulp.task('fonts:build', function() {
 gulp.task('image:build', function () {
     gulp.src(path.src.img)
         .pipe(imagemin())
+        .pipe(imageResize({
+          height : 1920,
+          crop : true,
+          upscale : false // image will be copied instead of resized if it would be upscaled by resizing
+        }))
         .pipe(gulp.dest(path.build.img))
         .pipe(reload({stream: true}));
 });
@@ -102,7 +115,7 @@ gulp.task('other:build', function () {
 gulp.task('build', [
     'html:build',
     'js:build',
-    'image:build',
+    // 'image:build',
     'style:build',
     'fonts:build',
     'other:build',

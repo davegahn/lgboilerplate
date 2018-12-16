@@ -1,0 +1,47 @@
+{
+  "plugins": [
+    "stylelint-order",
+  ],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "declaration-colon-space-before": "never",
+    "declaration-colon-space-after": "never",
+    "rule-empty-line-before": "never",
+    "media-feature-range-operator-space-before": "never",
+    "media-feature-range-operator-space-after": "never",
+    "media-feature-colon-space-before": "never",
+    "media-feature-colon-space-after": "never",
+    "order/properties-order": [
+      "position",
+      "z-index",
+      "top",
+      "right",
+      "bottom",
+      "left",
+    ],
+    "order/order": [
+      "declarations",
+      {
+        "type": "at-rule",
+        "name": "media"
+      },
+      {
+        "type": "rule",
+        "selector": "^&::(before|after)"
+      },
+      {
+        "type": "rule",
+        "selector": "^&:\\w"
+      },
+      {
+        "type": "rule",
+        "selector": "^&_"
+      },
+      {
+        "type": "rule",
+        "selector": "^."
+      }
+    ],
+  }
+}
