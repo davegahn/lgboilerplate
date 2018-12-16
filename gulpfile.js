@@ -25,7 +25,7 @@ const serverConfig = {
     tunnel: true,
     host: 'localhost',
     port: 9000,
-    logPrefix: "jtwbm"
+    logPrefix: "davegahn"
 };
 
 const path = {
@@ -53,7 +53,7 @@ const path = {
 gulp.task('html:build', function () {
     gulp.src(path.src.html)
         .pipe(fileinclude())
-        .on('error', console.log('err in html'))
+        // .on('error', console.log('err in html'))
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
