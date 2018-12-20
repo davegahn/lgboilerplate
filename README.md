@@ -1,23 +1,25 @@
 # LeadGid biolerplate empty project
 
-## Create icons (from src/icon.png):
 ### Before build project:
-Use https://realfavicongenerator.net/ service to generate a favicon
-$ gulp favicons:create ??????
 
-### Then:
+## npm install
+
+$ gulp favicons:create (Create icons (from src/icon.png):) or use https://realfavicongenerator.net/
 $ gulp favicons:build
 
-## Start watch project:
-$ gulp
+# Config cropRatio and remSize in gulpfile.js
+
+## gulp
 
 ## Clean build folder
 $ gulp clean
 
-?? Нужен ли google analytics script
+# Features
 
 ##1
 Начал разработку style-гайда по написанию стилей через испольльзоввни линтинга
+Линтер работает только в случае коммита, самостоятельн исправляя код.
+
 Статья http://blog.csssr.ru/2018/12/05/lint-your-css
 https://github.com/v1z/linters-example
 

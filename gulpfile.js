@@ -16,7 +16,11 @@ const gulp = require('gulp'),
     cssunit = require('gulp-css-unit'),
     imageResize = require('gulp-image-resize'),
     fileinclude = require('gulp-file-include'),
+    pngmin = require('gulp-tinypng'),
     gutil = require("gulp-util");
+
+const cropRatio = 1920;
+const remSize = 10;
 
 const serverConfig = {
     server: {
@@ -25,7 +29,7 @@ const serverConfig = {
     tunnel: true,
     host: 'localhost',
     port: 9000,
-    logPrefix: "davegahn"
+    logPrefix: "leadgid"
 };
 
 const path = {
@@ -34,6 +38,7 @@ const path = {
         js: 'build/js/',
         css: 'build/css/',
         img: 'build/img/',
+        png: 'build/img/',
         fonts: 'build/fonts/',
         favicons: 'build/favicons/'
     },
@@ -41,7 +46,8 @@ const path = {
         html: 'src/*.html',
         js: 'src/js/**/*.js',
         style: 'src/css/*.*css',
-        img: 'src/img/**/*.*',
+        img: 'src/img/**/*.{jpg, jpeg}',
+        png: 'src/img/**/*.png',
         fonts: 'src/fonts/**/*.*',
         other: 'src/*.!(html)',
         favicons: 'src/html/favicons/*.png',
@@ -50,10 +56,15 @@ const path = {
     clean: ['./build', './src/html/favicons/']
 };
 
+
 gulp.task('html:build', function () {
-    gulp.src(path.src.html)
-        .pipe(fileinclude())
-        // .on('error', console.log('err in html'))
+        var f = fileinclude();
+        f.on('error', function(e) {
+            gutil.log(e);
+            f.end();
+        });
+        return gulp.src(path.src.html)
+        .pipe(f)
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
@@ -68,12 +79,11 @@ gulp.task('js:build', function () {
 });
 gulp.task('style:build', function () {
     gulp.src(path.src.style)
-        .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass().on('error', sass.logError))
         .pipe(prefixer())
         .pipe(cssunit({
           type     :    'px-to-rem',
-          rootSize  :    10
+          rootSize  :    remSize
           })
         )
         .pipe(cssmin({compatibility: 'ie8'}))
@@ -85,12 +95,17 @@ gulp.task('fonts:build', function() {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts))
 });
-gulp.task('image:build', function () {
+gulp.task('png:compress', function () {
+  gulp.src(path.src.png)
+    .pipe(pngmin('Zt79bvgVfqR7qGP3dKlTNf61d3xxV8NM'))
+    .pipe(gulp.dest(path.build.png));
+});
+gulp.task('image:build', ['png:compress'], function () {
     gulp.src(path.src.img)
         .pipe(imagemin())
         .pipe(imageResize({
-          height : 1920,
-          crop : true,
+          height : cropRatio,
+          crop : false,
           upscale : false // image will be copied instead of resized if it would be upscaled by resizing
         }))
         .pipe(gulp.dest(path.build.img))
@@ -115,7 +130,7 @@ gulp.task('other:build', function () {
 gulp.task('build', [
     'html:build',
     'js:build',
-    // 'image:build',
+    'image:build',
     'style:build',
     'fonts:build',
     'other:build',
