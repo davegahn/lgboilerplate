@@ -69,7 +69,7 @@ gulp.task('html:build', function () {
         .pipe(reload({stream: true}));
 });
 gulp.task('js:build', function () {
-    gulp.src(path.src.js)
+    return gulp.src(path.src.js)
         .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(uglify())
@@ -78,7 +78,7 @@ gulp.task('js:build', function () {
         .pipe(reload({stream: true}));
 });
 gulp.task('style:build', function () {
-    gulp.src(path.src.style)
+    return gulp.src(path.src.style)
         .pipe(sass().on('error', sass.logError))
         .pipe(prefixer())
         .pipe(cssunit({
@@ -92,16 +92,16 @@ gulp.task('style:build', function () {
         .pipe(reload({stream: true}));
 });
 gulp.task('fonts:build', function() {
-    gulp.src(path.src.fonts)
+    return gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts))
 });
 gulp.task('png:compress', function () {
-  gulp.src(path.src.png)
-    .pipe(pngmin('Zt79bvgVfqR7qGP3dKlTNf61d3xxV8NM'))
-    .pipe(gulp.dest(path.build.png));
+    return gulp.src(path.src.png)
+        .pipe(pngmin('Zt79bvgVfqR7qGP3dKlTNf61d3xxV8NM'))
+        .pipe(gulp.dest(path.build.png));
 });
 gulp.task('image:build', ['png:compress'], function () {
-    gulp.src(path.src.img)
+    return gulp.src(path.src.img)
         .pipe(imagemin())
         .pipe(imageResize({
           height : cropRatio,
@@ -112,18 +112,18 @@ gulp.task('image:build', ['png:compress'], function () {
         .pipe(reload({stream: true}));
 });
 gulp.task('notFavicons:build', function () {
-    gulp.src(path.src.notFavicons)
+    return gulp.src(path.src.notFavicons)
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
 gulp.task('favicons:build', ['notFavicons:build'], function () {
-    gulp.src(path.src.favicons)
+    return gulp.src(path.src.favicons)
         .pipe(imagemin())
         .pipe(gulp.dest(path.build.favicons))
         .pipe(reload({stream: true}));
 });
 gulp.task('other:build', function () {
-    gulp.src(path.src.other)
+    return gulp.src(path.src.other)
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
