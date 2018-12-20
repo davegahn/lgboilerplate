@@ -45,7 +45,7 @@ const path = {
     src: {
         html: 'src/*.html',
         js: 'src/js/**/*.js',
-        style: 'src/css/*.*css',
+        style: 'src/css/**/*.*css',
         img: 'src/img/**/*.{jpg, jpeg}',
         png: 'src/img/**/*.png',
         fonts: 'src/fonts/**/*.*',

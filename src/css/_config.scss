@@ -1,0 +1,73 @@
+// Define vars, mixins and helpres etc.
+
+//vars
+$grey: #8d8888;
+
+// media-queries
+
+@mixin desktops-lg() {
+  @media screen and (min-width:1400px) {
+    @content;
+  }
+}
+
+@mixin desktops() {
+  @media screen and (min-width:1024px) {
+    @content;
+  }
+}
+
+@mixin tablets-lg() {
+  @media screen and (min-width:840px) {
+    @content;
+  }
+}
+
+@mixin tablets-md() {
+  @media screen and (min-width:768px) {
+    @content;
+  }
+}
+
+@mixin tablets() {
+  @media screen and (min-width:600px) {
+    @content;
+  }
+}
+
+// mixins
+
+//https://github.com/davegahn/portfolio/blob/master/source/styles/mixins.scss
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content:' ';
+    display:table;
+  }
+  &:after {
+    clear:both;
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    @content;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+// helpers
+.hidden {
+  display:none;
+}

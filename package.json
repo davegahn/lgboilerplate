@@ -66,7 +66,7 @@
     "linters": {
       "*.scss": [
         "prettier --write",
-        "stylelint --fix --config ./.stylelintrc-format",
+        "stylelint --fix",
         "git add"
       ]
     },

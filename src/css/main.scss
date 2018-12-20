@@ -1,13 +1,11 @@
-body {
-  background-color: yellow;
-  font-size: 15px;
-}
+@import 'normalize.css';
 
-.block {
-  position: relative;
-  top: 20px;
-  right: 10px;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-}
+@import 'config';
+
+@import 'fonts';
+
+@import 'common';
+
+// Import sections and components
+
+@import 'sections/intro';
